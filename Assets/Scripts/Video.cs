@@ -17,8 +17,8 @@ public class Video : MonoBehaviour
     void Start()
     {
 
-        myAudioSource = GetComponent<AudioSource>();
-
+        //myAudioSource = GetComponent<AudioSource>();
+        //string URL = targetSearchResult.MetaData;
     }
 
 
@@ -28,7 +28,7 @@ public class Video : MonoBehaviour
     void Update()
     {
 
-        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+       /* if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
             RaycastHit Hit;
@@ -41,7 +41,7 @@ public class Video : MonoBehaviour
                 {
                     case "YesButton":
                     {
-                        Application.OpenURL("https://www.google.com/");
+                        //Application.OpenURL(URL);
                         break;
                     }
                     case "NoButton":
@@ -52,6 +52,6 @@ public class Video : MonoBehaviour
                     }
                 }
             }
-        }
+        }*/
     }
 }

@@ -10,6 +10,9 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
     private CloudRecoBehaviour mCloudRecoBehaviour;
     private bool mIsScanning = false;
     private string mTargetMetadata = "";
+    private string URL = "https://www.google.com/";
+    private string btnName;
+
     // Use this for initialization 
     void Start()
     {
@@ -64,6 +67,7 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
             ObjectTracker tracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
             tracker.GetTargetFinder<ImageTargetFinder>().EnableTracking(targetSearchResult, ImageTargetTemplate.gameObject);
         }
+        URL = cloudRecoSearchResult.MetaData;
     }
 
     void OnGUI()
@@ -79,8 +83,37 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
             if (GUI.Button(new Rect(100, 300, 200, 50), "Restart Scanning"))
             {
                 // Restart TargetFinder
+                //Application.OpenURL(URL);
                 mCloudRecoBehaviour.CloudRecoEnabled = true;
             }
         }
     }
-}
+
+   
+   void Update()
+   {
+        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit Hit;
+                if (Physics.Raycast(ray, out Hit))
+                {
+                    btnName = Hit.transform.name;
+
+                    switch (btnName)
+                    {
+                        case "YesButton":
+                        {
+                            Application.OpenURL(URL);
+                            break;
+                        }
+                        case "NoButton":
+                        {
+                                Application.OpenURL("https://www.google.com/");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
