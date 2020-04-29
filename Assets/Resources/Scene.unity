@@ -121,7 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-  m_ObjectHideFlags: 0
 --- !u!1 &393868977
 GameObject:
   m_ObjectHideFlags: 0
