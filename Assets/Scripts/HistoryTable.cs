@@ -14,6 +14,7 @@ public class HistoryTable : MonoBehaviour
     private Transform entryTemplate;
     private List<Transform> historyEntryTransformList;
     [SerializeField] private History _History;
+    private List<HistoryEntry> historyEntryList;
 
 
     private void Awake()
@@ -24,11 +25,14 @@ public class HistoryTable : MonoBehaviour
         entryTemplate.gameObject.SetActive(false);
 
         //AddHistoryEntry(12222222, "asd");
+        //Poate fi decomentat
+        /*if (!System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"))
+        {
+            AddHistoryEntry(12222222, "anamaria");
+        }*/
 
-        
-        Debug.Log(System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"));
-        Debug.Log(Application.persistentDataPath);
-        Debug.Log(System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"));
+
+        //Debug.Log(System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"));
         if (System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"))
         {
 
@@ -97,21 +101,38 @@ public class HistoryTable : MonoBehaviour
     {
         //Create HighScoreEntry
         HistoryEntry historyEntry = new HistoryEntry { date = date, name = name };
+        if (!System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"))
+        {
+            historyEntryList = new List<HistoryEntry>()
+            {
+                new HistoryEntry{ date = date, name = name}
+            };
 
-        //Load saved HighScores
-        string jsonString = System.IO.File.ReadAllText(Application.persistentDataPath + "/HistoryData.json");
-        History highScores = JsonUtility.FromJson<History>(jsonString);
+            _History = new History { historyEntryList = historyEntryList };
 
-        //Add new entry
-        highScores.historyEntryList.Add(historyEntry);
+            string potion = JsonUtility.ToJson(_History);
+
+            System.IO.File.WriteAllText(Application.persistentDataPath + "/HistoryData.json", potion);
+
+        } else
+        {
+            //Load saved HighScores
+            string jsonString = System.IO.File.ReadAllText(Application.persistentDataPath + "/HistoryData.json");
+            History highScores = JsonUtility.FromJson<History>(jsonString);
+
+            //Add new entry
+            highScores.historyEntryList.Add(historyEntry);
 
 
-        _History = new History { historyEntryList = highScores.historyEntryList };
+            _History = new History { historyEntryList = highScores.historyEntryList };
 
-        string list = JsonUtility.ToJson(_History);
-        Debug.Log(list);
+            string list = JsonUtility.ToJson(_History);
+            Debug.Log(list);
 
-        System.IO.File.WriteAllText(Application.persistentDataPath + "/HistoryData.json", list);
+            System.IO.File.WriteAllText(Application.persistentDataPath + "/HistoryData.json", list);
+        }
+
+       
 
     }
 
