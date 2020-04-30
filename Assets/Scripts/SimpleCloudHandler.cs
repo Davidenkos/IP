@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +7,22 @@ using Vuforia;
 
 public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
 {
+
+    [Serializable]
+    public class Movie
+    {
+        public string name;
+        public string url;
+    }
+
     public ImageTargetBehaviour ImageTargetTemplate;
     private CloudRecoBehaviour mCloudRecoBehaviour;
     private bool mIsScanning = false;
     private string mTargetMetadata = "";
     private string URL = "https://www.google.com/";
     private string btnName;
+    Movie movie = new Movie();
+    
 
     // Use this for initialization 
     void Start()
@@ -47,7 +58,7 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
             // clear all known trackables
             var tracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
             tracker.GetTargetFinder<ImageTargetFinder>().ClearTrackables(false);
-        }
+        }        
     }
 
     // Here we handle a cloud target recognition event
@@ -67,7 +78,9 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
             ObjectTracker tracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
             tracker.GetTargetFinder<ImageTargetFinder>().EnableTracking(targetSearchResult, ImageTargetTemplate.gameObject);
         }
-        URL = cloudRecoSearchResult.MetaData;
+        movie = JsonUtility.FromJson<Movie>(mTargetMetadata);
+        mTargetMetadata = movie.name;
+        URL = movie.url;
     }
 
     void OnGUI()
@@ -80,11 +93,14 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
         // so that user can restart cloud scanning
         if (!mIsScanning)
         {
-            if (GUI.Button(new Rect(100, 300, 200, 50), "Restart Scanning"))
+            if (GUI.Button(new Rect(100, 300, 100, 50), "Restart Scan"))
             {
-                // Restart TargetFinder
-                //Application.OpenURL(URL);
+                // Restart TargetFinder                
                 mCloudRecoBehaviour.CloudRecoEnabled = true;
+            }
+            if (GUI.Button(new Rect(200, 300, 100, 50), "Movie Trailer"))
+            {
+                Application.OpenURL(URL);
             }
         }
     }
