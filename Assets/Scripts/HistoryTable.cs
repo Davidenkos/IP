@@ -26,10 +26,10 @@ public class HistoryTable : MonoBehaviour
 
         //AddHistoryEntry(12222222, "asd");
         //Poate fi decomentat
-        /*if (!System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"))
+        if (!System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"))
         {
-            AddHistoryEntry(12222222, "anamaria");
-        }*/
+            AddHistoryEntry(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), "anamaria");
+        }
 
 
         //Debug.Log(System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"));
@@ -39,10 +39,8 @@ public class HistoryTable : MonoBehaviour
             string jsonString = System.IO.File.ReadAllText(Application.persistentDataPath + "/HistoryData.json");
             History history = JsonUtility.FromJson<History>(jsonString);
 
-            Debug.Log("Ioana");
 
-            Debug.Log(history);
-            for (int i = 0; i < history.historyEntryList.Count; i++)
+            /*for (int i = 0; i < history.historyEntryList.Count; i++)
             {
                 for (int j = i + 1; j < history.historyEntryList.Count; j++)
                 {
@@ -54,7 +52,7 @@ public class HistoryTable : MonoBehaviour
                     }
                 }
 
-            }
+            }*/
             historyEntryTransformList = new List<Transform>();
             var index = 0;
             foreach (HistoryEntry historyEntry in history.historyEntryList)
@@ -84,7 +82,7 @@ public class HistoryTable : MonoBehaviour
         int rank = transformList.Count + 1;
 
 
-        entryTransform.Find("dateText").GetComponent<Text>().text = historyEntry.date.ToString();
+        entryTransform.Find("dateText").GetComponent<Text>().text = historyEntry.date;
 
         //string name = highScoreEntry.name;
         entryTransform.Find("nameText").GetComponent<Text>().text = historyEntry.name;
@@ -97,7 +95,7 @@ public class HistoryTable : MonoBehaviour
     }
    
 
-    private void AddHistoryEntry(int date, string name)
+    private void AddHistoryEntry(string date, string name)
     {
         //Create HighScoreEntry
         HistoryEntry historyEntry = new HistoryEntry { date = date, name = name };
@@ -145,7 +143,7 @@ public class HistoryTable : MonoBehaviour
     [System.Serializable]
     private class HistoryEntry
     {
-        public int date;
+        public string date;
         public string name;
     }
 }
