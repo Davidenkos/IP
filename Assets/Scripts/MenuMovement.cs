@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuMovement : MonoBehaviour
 {
@@ -43,5 +44,11 @@ public class MenuMovement : MonoBehaviour
     {
         movePanel = false;
         movePanelBack = true;
+    }
+
+    public void HistoryButton()
+    {
+        SceneManager.LoadSceneAsync("HistoryTableResponsive");
+
     }
 }
