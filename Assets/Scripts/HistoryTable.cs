@@ -26,13 +26,12 @@ public class HistoryTable : MonoBehaviour
 
         //AddHistoryEntry(12222222, "asd");
         //Poate fi decomentat
-        if (!System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"))
+        /*if (!System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"))
         {
             AddHistoryEntry(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), "anamaria");
-        }
+        }*/
 
 
-        //Debug.Log(System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"));
         if (System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"))
         {
 
@@ -40,19 +39,7 @@ public class HistoryTable : MonoBehaviour
             History history = JsonUtility.FromJson<History>(jsonString);
 
 
-            /*for (int i = 0; i < history.historyEntryList.Count; i++)
-            {
-                for (int j = i + 1; j < history.historyEntryList.Count; j++)
-                {
-                    if (history.historyEntryList[j].date > history.historyEntryList[i].date)
-                    {
-                        HistoryEntry temp = history.historyEntryList[i];
-                        history.historyEntryList[i] = history.historyEntryList[j];
-                        history.historyEntryList[j] = temp;
-                    }
-                }
-
-            }*/
+    
             historyEntryTransformList = new List<Transform>();
             var index = 0;
             foreach (HistoryEntry historyEntry in history.historyEntryList)
@@ -93,46 +80,7 @@ public class HistoryTable : MonoBehaviour
        
         transformList.Add(entryTransform);
     }
-   
-
-    private void AddHistoryEntry(string date, string name)
-    {
-        //Create HighScoreEntry
-        HistoryEntry historyEntry = new HistoryEntry { date = date, name = name };
-        if (!System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"))
-        {
-            historyEntryList = new List<HistoryEntry>()
-            {
-                new HistoryEntry{ date = date, name = name}
-            };
-
-            _History = new History { historyEntryList = historyEntryList };
-
-            string potion = JsonUtility.ToJson(_History);
-
-            System.IO.File.WriteAllText(Application.persistentDataPath + "/HistoryData.json", potion);
-
-        } else
-        {
-            //Load saved HighScores
-            string jsonString = System.IO.File.ReadAllText(Application.persistentDataPath + "/HistoryData.json");
-            History highScores = JsonUtility.FromJson<History>(jsonString);
-
-            //Add new entry
-            highScores.historyEntryList.Add(historyEntry);
-
-
-            _History = new History { historyEntryList = highScores.historyEntryList };
-
-            string list = JsonUtility.ToJson(_History);
-            Debug.Log(list);
-
-            System.IO.File.WriteAllText(Application.persistentDataPath + "/HistoryData.json", list);
-        }
-
-       
-
-    }
+  
 
     [System.Serializable]
     private class History

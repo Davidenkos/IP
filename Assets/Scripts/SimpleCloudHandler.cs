@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using Vuforia;
+using System.Linq;
+using System.Threading.Tasks;
+using UnityEngine.UI;
+using System.IO;
 
 public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
 {
@@ -15,6 +18,19 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
         public string url;
     }
 
+    [System.Serializable]
+    private class History
+    {
+        public List<HistoryEntry> historyEntryList;
+    }
+
+    [System.Serializable]
+    private class HistoryEntry
+    {
+        public string date;
+        public string name;
+    }
+
     public ImageTargetBehaviour ImageTargetTemplate;
     private CloudRecoBehaviour mCloudRecoBehaviour;
     private bool mIsScanning = false;
@@ -22,7 +38,13 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
     private string URL = "https://www.google.com/";
     private string btnName;
     Movie movie = new Movie();
-    
+
+    private Transform entryContainer;
+    private Transform entryTemplate;
+    private List<Transform> historyEntryTransformList;
+    [SerializeField] private History _History;
+    private List<HistoryEntry> historyEntryList;
+
 
     // Use this for initialization 
     void Start()
@@ -81,6 +103,49 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
         movie = JsonUtility.FromJson<Movie>(mTargetMetadata);
         mTargetMetadata = movie.name;
         URL = movie.url;
+        Debug.Log("Ioana");
+        AddHistoryEntry(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), movie.name);
+
+    }
+
+    private void AddHistoryEntry(string date, string name)
+    {
+        //Create HighScoreEntry
+        HistoryEntry historyEntry = new HistoryEntry { date = date, name = name };
+        if (!System.IO.File.Exists(Application.persistentDataPath + "/HistoryData.json"))
+        {
+            historyEntryList = new List<HistoryEntry>()
+            {
+                new HistoryEntry{ date = date, name = name}
+            };
+
+            _History = new History { historyEntryList = historyEntryList };
+
+            string potion = JsonUtility.ToJson(_History);
+
+            System.IO.File.WriteAllText(Application.persistentDataPath + "/HistoryData.json", potion);
+
+        }
+        else
+        {
+            //Load saved HighScores
+            string jsonString = System.IO.File.ReadAllText(Application.persistentDataPath + "/HistoryData.json");
+            History highScores = JsonUtility.FromJson<History>(jsonString);
+
+            //Add new entry
+            highScores.historyEntryList.Add(historyEntry);
+
+
+            _History = new History { historyEntryList = highScores.historyEntryList };
+
+            string list = JsonUtility.ToJson(_History);
+            Debug.Log(list);
+
+            System.IO.File.WriteAllText(Application.persistentDataPath + "/HistoryData.json", list);
+        }
+
+
+
     }
 
     void OnGUI()

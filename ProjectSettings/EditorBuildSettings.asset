@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Resources/Scene.unity
+    guid: 4b03d69649d0474488b5c7048e0253c8
+  - enabled: 1
+    path: Assets/Resources/HistoryTableResponsive.unity
+    guid: 3ca9e79c00d54514dac5f3d6a4961901
   m_configObjects: {}
