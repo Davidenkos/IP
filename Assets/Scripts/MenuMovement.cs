@@ -9,6 +9,7 @@ public class MenuMovement : MonoBehaviour
     public GameObject menuOriginalPos;
     public GameObject menuActivePos;
     public GameObject menuPanel;
+    public SimpleCloudHandler scanner;
 
     public bool movePanel;
     public bool movePanelBack;
@@ -33,11 +34,11 @@ public class MenuMovement : MonoBehaviour
             menuPanel.transform.position = Vector3.Lerp(menuPanel.transform.position, menuOriginalPos.transform.position, speed * Time.deltaTime);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && menuPanel.transform.position == menuActivePos.transform.position)
+        if (Input.GetKeyDown(KeyCode.Escape) && movePanel)
         {
             MovePanelBack();
         }
-        else if (Input.GetKeyDown(KeyCode.Escape)
+        else if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
@@ -65,5 +66,11 @@ public class MenuMovement : MonoBehaviour
     {
         SceneManager.LoadSceneAsync("FavoritesTableResponsive");
 
+    }
+
+    public void NewFav()
+    {
+        /*GameObject.FindGameObjectWithTag("CloudRecognition").GetComponent<ScriptableObject>();*/
+        scanner.scanned = false;
     }
 }

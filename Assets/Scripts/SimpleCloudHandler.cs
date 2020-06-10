@@ -31,6 +31,7 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
         public string name;
     }
 
+    public bool scanned = false;
     public ImageTargetBehaviour ImageTargetTemplate;
     private CloudRecoBehaviour mCloudRecoBehaviour;
     private bool mIsScanning = false;
@@ -80,7 +81,9 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
             // clear all known trackables
             var tracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
             tracker.GetTargetFinder<ImageTargetFinder>().ClearTrackables(false);
-        }        
+        }
+
+        scanned = false;
     }
 
     // Here we handle a cloud target recognition event
@@ -105,7 +108,7 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
         URL = movie.url;
         Debug.Log("Ioana");
         AddHistoryEntry(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), movie.name);
-
+        scanned = true;
     }
 
     private void AddHistoryEntry(string date, string name)
