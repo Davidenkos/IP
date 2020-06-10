@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/HistoryTableResponsive.unity
     guid: 3ca9e79c00d54514dac5f3d6a4961901
+  - enabled: 1
+    path: Assets/Resources/FavoritesTableResponsive.unity
+    guid: 31cd3d4f392b2654c9a277d1a3e82d31
   m_configObjects: {}

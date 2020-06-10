@@ -531,6 +531,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ImageTargetTemplate: {fileID: 2142762223}
+  _History:
+    historyEntryList: []
 --- !u!1 &678484404 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1144978573833690, guid: 1e8e1924bb442334c9125455634bb567,
@@ -731,10 +733,21 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 713591788}
+  m_TargetGraphic: {fileID: 922767766}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 459736092}
+        m_MethodName: FavoritesButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &713591788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -976,10 +989,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 922767766}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: [{m_Target: {fileID: 459736092}, m_MethodName: HistoryButton, m_Mode: 1,
-          m_Arguments: {m_ObjectArgument: {fileID: 0}, m_ObjectArgumentAssemblyTypeName: 'UnityEngine.Object,
-              UnityEngine', m_IntArgument: 0, m_FloatArgument: 0, m_StringArgument: '',
-            m_BoolArgument: 0}, m_CallState: 2}]
+      m_Calls:
+      - m_Target: {fileID: 459736092}
+        m_MethodName: HistoryButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &922767766
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1892,7 +1892,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: H I S T O R Y
+  m_Text: F A V O R I T E S
 --- !u!222 &1855491935
 CanvasRenderer:
   m_ObjectHideFlags: 0
