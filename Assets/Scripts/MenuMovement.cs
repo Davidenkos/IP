@@ -32,6 +32,15 @@ public class MenuMovement : MonoBehaviour
         {
             menuPanel.transform.position = Vector3.Lerp(menuPanel.transform.position, menuOriginalPos.transform.position, speed * Time.deltaTime);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && menuPanel.transform.position == menuActivePos.transform.position)
+        {
+            MovePanelBack();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape)
+        {
+            Application.Quit();
+        }
     }
 
     public void MovePanel()
