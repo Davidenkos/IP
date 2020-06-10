@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 
 public class HistoryTable : MonoBehaviour
@@ -16,6 +17,14 @@ public class HistoryTable : MonoBehaviour
     [SerializeField] private History _History;
     private List<HistoryEntry> historyEntryList;
 
+
+    void Update()
+    {
+        if (Input.GetKeyDown (KeyCode.Escape))
+        {
+            SceneManager.LoadSceneAsync("Scene");
+        }
+    }
 
     private void Awake()
     {
