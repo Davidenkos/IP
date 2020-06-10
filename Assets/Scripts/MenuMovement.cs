@@ -51,4 +51,10 @@ public class MenuMovement : MonoBehaviour
         SceneManager.LoadSceneAsync("HistoryTableResponsive");
 
     }
+
+    public void FavoritesButton()
+    {
+        SceneManager.LoadSceneAsync("FavoritesTableResponsive");
+
+    }
 }
