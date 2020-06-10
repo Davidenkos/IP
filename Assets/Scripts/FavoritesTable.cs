@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 
 public class FavoritesTable : MonoBehaviour
@@ -15,6 +16,15 @@ public class FavoritesTable : MonoBehaviour
     private List<Transform> historyEntryTransformList;
     [SerializeField] private History _History;
     private List<HistoryEntry> historyEntryList;
+
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadSceneAsync("Scene");
+        }
+    }
 
 
     private void Awake()
