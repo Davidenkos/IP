@@ -153,6 +153,7 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
 
     }
 
+    /*
     void OnGUI()
     {
         // Display current 'scanning' status
@@ -174,7 +175,7 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
             }
         }
     }
-
+    */
    
    void Update()
    {
@@ -190,12 +191,13 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
                     {
                         case "YesButton":
                         {
+                            mCloudRecoBehaviour.CloudRecoEnabled = true;
                             Application.OpenURL(URL);
                             break;
                         }
                         case "NoButton":
                         {
-                                Application.OpenURL("https://www.google.com/");
+                            mCloudRecoBehaviour.CloudRecoEnabled = true;
                             break;
                         }
                     }
