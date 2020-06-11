@@ -31,14 +31,14 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
         public string name;
     }
 
-    public bool scanned = false;
+    public FavoritesSwapIcon favoritesSwap;
     public ImageTargetBehaviour ImageTargetTemplate;
     private CloudRecoBehaviour mCloudRecoBehaviour;
     private bool mIsScanning = false;
     private string mTargetMetadata = "";
     private string URL = "https://www.google.com/";
     private string btnName;
-    Movie movie = new Movie();
+    public Movie movie = new Movie();
 
     private Transform entryContainer;
     private Transform entryTemplate;
@@ -82,8 +82,6 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
             var tracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
             tracker.GetTargetFinder<ImageTargetFinder>().ClearTrackables(false);
         }
-
-        scanned = false;
     }
 
     // Here we handle a cloud target recognition event
@@ -106,9 +104,44 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
         movie = JsonUtility.FromJson<Movie>(mTargetMetadata);
         mTargetMetadata = movie.name;
         URL = movie.url;
-        Debug.Log("Ioana");
-        AddHistoryEntry(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), movie.name);
-        scanned = true;
+        string date = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+        AddHistoryEntry(date, movie.name);
+
+        bool fav = CheckIfFav(date, movie.name);
+        favoritesSwap.SetFavorite(fav);
+    }
+
+    private bool CheckIfFav(string date, string name)
+    {
+        //Create HighScoreEntry
+        HistoryEntry historyEntry = new HistoryEntry { date = date, name = name };
+        if (!System.IO.File.Exists(Application.persistentDataPath + "/FavoritesData.json"))
+        {
+            historyEntryList = new List<HistoryEntry>()
+            {
+            new HistoryEntry{ date = date, name = name}
+            };
+
+            _History = new History { historyEntryList = historyEntryList };
+
+            string potion = JsonUtility.ToJson(_History);
+
+            System.IO.File.WriteAllText(Application.persistentDataPath + "/FavoritesData.json", potion);
+
+            return false;
+        }
+        else
+        {
+            //Load saved HighScores
+            string jsonString = System.IO.File.ReadAllText(Application.persistentDataPath + "/FavoritesData.json");
+            History highScores = JsonUtility.FromJson<History>(jsonString);
+
+            //Add new entry
+
+            var element = highScores.historyEntryList.Find(x => x.name == name);
+            if (element == null) return false;
+            return true;
+        }
     }
 
     private void AddHistoryEntry(string date, string name)

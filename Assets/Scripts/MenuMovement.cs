@@ -67,10 +67,4 @@ public class MenuMovement : MonoBehaviour
         SceneManager.LoadSceneAsync("FavoritesTableResponsive");
 
     }
-
-    public void NewFav()
-    {
-        /*GameObject.FindGameObjectWithTag("CloudRecognition").GetComponent<ScriptableObject>();*/
-        scanner.scanned = false;
-    }
 }

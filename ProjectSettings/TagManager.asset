@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - CloudRecognition
+  - Canvas
   layers:
   - Default
   - TransparentFX

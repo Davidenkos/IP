@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 459736089}
   - component: {fileID: 459736088}
   - component: {fileID: 459736092}
+  - component: {fileID: 459736093}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -390,8 +391,26 @@ MonoBehaviour:
   menuOriginalPos: {fileID: 1547156010}
   menuActivePos: {fileID: 1020291436}
   menuPanel: {fileID: 2080359380}
+  scanner: {fileID: 0}
   movePanel: 0
   movePanelBack: 0
+--- !u!114 &459736093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459736087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de2e13351230677489a787769db6850b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultIconBtn: {fileID: 1222482964}
+  favoriteIconBtn: {fileID: 679163603}
+  cloudHandler: {fileID: 560589754}
+  _History:
+    historyEntryList: []
 --- !u!1 &555300438
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,7 +551,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6af6aa3fb673ff43b9390238f82bddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  favoritesSwap: {fileID: 459736093}
   ImageTargetTemplate: {fileID: 2142762223}
+  movie:
+    name: 
+    url: 
   _History:
     historyEntryList: []
 --- !u!1 &678484404 stripped
@@ -600,7 +623,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 70, y: -70}
+  m_AnchoredPosition: {x: -70, y: -70}
   m_SizeDelta: {x: 140, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &679163603
@@ -914,36 +937,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713591785}
   m_CullTransparentMesh: 0
---- !u!1 &818937969
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 818937970}
-  m_Layer: 0
-  m_Name: BurgerMenuObjects
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &818937970
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 818937969}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 490.29132, y: 354.22107, z: -183.12093}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &901826485
 GameObject:
   m_ObjectHideFlags: 0
