@@ -169,9 +169,7 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
             History highScores = JsonUtility.FromJson<History>(jsonString);
 
             //Add new entry
-           
             highScores.historyEntryList.Add(historyEntry);
-
 
 
             _History = new History { historyEntryList = highScores.historyEntryList };
@@ -186,7 +184,6 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
 
     }
 
-    /*
     void OnGUI()
     {
         // Display current 'scanning' status
@@ -208,7 +205,7 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
             }
         }
     }
-    */
+
    
    void Update()
    {
@@ -224,13 +221,12 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
                     {
                         case "YesButton":
                         {
-                            mCloudRecoBehaviour.CloudRecoEnabled = true;
                             Application.OpenURL(URL);
                             break;
                         }
                         case "NoButton":
                         {
-                            mCloudRecoBehaviour.CloudRecoEnabled = true;
+                                Application.OpenURL("https://www.google.com/");
                             break;
                         }
                     }
