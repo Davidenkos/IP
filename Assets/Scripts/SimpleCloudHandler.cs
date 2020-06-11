@@ -38,7 +38,7 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
     private string mTargetMetadata = "";
     private string URL = "https://www.google.com/";
     private string btnName;
-    Movie movie = new Movie();
+    public Movie movie = new Movie();
 
     private Transform entryContainer;
     private Transform entryTemplate;
@@ -136,7 +136,9 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
             History highScores = JsonUtility.FromJson<History>(jsonString);
 
             //Add new entry
+           
             highScores.historyEntryList.Add(historyEntry);
+
 
 
             _History = new History { historyEntryList = highScores.historyEntryList };
