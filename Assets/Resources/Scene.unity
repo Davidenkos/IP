@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 560589754}
   m_Layer: 0
   m_Name: Cloud Recognition
-  m_TagString: Untagged
+  m_TagString: CloudRecognition
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -551,6 +551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6af6aa3fb673ff43b9390238f82bddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scanned: 0
   favoritesSwap: {fileID: 459736093}
   ImageTargetTemplate: {fileID: 2142762223}
   movie:
@@ -1827,7 +1828,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 459736092}
-        m_MethodName: MovePanelBack
+        m_MethodName: NewFav
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -1,10 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using UnityEngine.UI;
+using System.IO;
 using UnityEngine.SceneManagement;
 
 public class MenuMovement : MonoBehaviour
 {
+
+    private Transform entryContainer;
+    private Transform entryTemplate;
+    private List<Transform> historyEntryTransformList;
+    [SerializeField] private History _History;
+    private List<HistoryEntry> historyEntryList;
 
     public GameObject menuOriginalPos;
     public GameObject menuActivePos;
@@ -20,6 +31,8 @@ public class MenuMovement : MonoBehaviour
     {
         // make sure that the panel is hidden
         menuPanel.transform.position = menuOriginalPos.transform.position;
+        scanner = GameObject.FindGameObjectWithTag("CloudRecognition").GetComponent<SimpleCloudHandler>();
+
     }
 
     // Update is called once per frame
