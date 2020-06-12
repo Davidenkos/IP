@@ -45,6 +45,8 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
     private List<Transform> historyEntryTransformList;
     [SerializeField] private History _History;
     private List<HistoryEntry> historyEntryList;
+    
+    private AndroidJavaObject activityContext = null;
 
 
     // Use this for initialization 
@@ -109,8 +111,8 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
         URL = movie.url;
         
         SetActivityInNativePlugin();
-        ShowTargetInfo(mTargetMetadata);
-        //MovieTTS(mTargetMetadata);
+        //ShowTargetInfo(mTargetMetadata);
+        MovieTTS(mTargetMetadata);
         
         string date = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
         AddHistoryEntry(date, movie.name);
@@ -250,13 +252,6 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
         }
         return javaObj;
     }
-    
-    /*private void MovieTTS(String movieName)
-    {
-        AndroidJavaClass jclass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        AndroidJavaObject activity = jclass.GetStatic<AndroidJavaObject>("currentActivity");
-        activity.Call();
-    }*/
   
     private void SetActivityInNativePlugin() {
         // Retrieve current Android Activity from the Unity Player
@@ -292,8 +287,14 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
             }));
         }
     }
+    
+    private void MovieTTS(String movieName){
+        //GetJavaObject().Call("showTargetInfo", movieName);
+        GetJavaObject().Call("MovieTTS", movieName);
+    }
   
     private void ShowTargetInfo(string targetName) {
+        //_ShowAndroidToastMessage(targetName);
         GetJavaObject().Call("showTargetInfo", targetName);
     }
 #else
