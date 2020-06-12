@@ -45,6 +45,8 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
     private List<Transform> historyEntryTransformList;
     [SerializeField] private History _History;
     private List<HistoryEntry> historyEntryList;
+    
+    private AndroidJavaObject activityContext = null;
 
 
     // Use this for initialization 
@@ -57,6 +59,9 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
         {
             mCloudRecoBehaviour.RegisterEventHandler(this);
         }
+        AndroidJavaClass jclass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject activity = jclass.GetStatic<AndroidJavaObject>("currentActivity"); // doesn't work ????
+        activity.Call("initTTS");
     }
 
 
@@ -104,6 +109,11 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
         movie = JsonUtility.FromJson<Movie>(mTargetMetadata);
         mTargetMetadata = movie.name;
         URL = movie.url;
+        
+        SetActivityInNativePlugin();
+        //ShowTargetInfo(mTargetMetadata);
+        MovieTTS(mTargetMetadata);
+        
         string date = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
         AddHistoryEntry(date, movie.name);
 
@@ -209,28 +219,87 @@ public class SimpleCloudHandler : MonoBehaviour, IObjectRecoEventHandler
    
    void Update()
    {
-        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-            RaycastHit Hit;
-                if (Physics.Raycast(ray, out Hit))
-                {
-                    btnName = Hit.transform.name;
+    if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+        RaycastHit Hit;
+            if (Physics.Raycast(ray, out Hit))
+            {
+                btnName = Hit.transform.name;
 
-                    switch (btnName)
+                switch (btnName)
+                {
+                    case "YesButton":
                     {
-                        case "YesButton":
-                        {
-                            Application.OpenURL(URL);
-                            break;
-                        }
-                        case "NoButton":
-                        {
-                                Application.OpenURL("https://www.google.com/");
-                            break;
-                        }
+                        Application.OpenURL(URL);
+                        break;
+                    }
+                    case "NoButton":
+                    {
+                            Application.OpenURL("https://www.google.com/");
+                        break;
                     }
                 }
             }
         }
     }
+#if UNITY_ANDROID
+    private AndroidJavaObject javaObj = null;
+  
+    private AndroidJavaObject GetJavaObject() {
+        if (javaObj == null) {
+            javaObj = new AndroidJavaObject("com.example.plugin1.ImageTargetLogger");
+        }
+        return javaObj;
+    }
+  
+    private void SetActivityInNativePlugin() {
+        // Retrieve current Android Activity from the Unity Player
+        AndroidJavaClass jclass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject activity = jclass.GetStatic<AndroidJavaObject>("currentActivity"); // doesn't work ????
+        
+        /*
+        AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
+        activity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+            {
+                AndroidJavaObject toastObject = toastClass.CallStatic<AndroidJavaObject>("makeText", activity, "toast from unity", 0);
+                toastObject.Call("show");
+            }));
+        */
+  
+        // Pass reference to the current Activity into the native plugin,
+        // using the 'setActivity' method that we defined in the ImageTargetLogger Java class
+        GetJavaObject().Call("setActivity", activity);
+    }
+    
+    private void _ShowAndroidToastMessage(string message)
+    {
+        AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+
+        if (unityActivity != null)
+        {
+            AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
+            unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+            {
+                AndroidJavaObject toastObject = toastClass.CallStatic<AndroidJavaObject>("makeText", unityActivity, message, 0);
+                toastObject.Call("show");
+            }));
+        }
+    }
+    
+    private void MovieTTS(String movieName){
+        //GetJavaObject().Call("showTargetInfo", movieName);
+        GetJavaObject().Call("MovieTTS", movieName);
+    }
+  
+    private void ShowTargetInfo(string targetName) {
+        //_ShowAndroidToastMessage(targetName);
+        GetJavaObject().Call("showTargetInfo", targetName);
+    }
+#else
+    private void ShowTargetInfo(string targetName) {
+        Debug.Log("ShowTargetInfo method placeholder for Play Mode (not running on Android device)");
+    }
+#endif
+}
